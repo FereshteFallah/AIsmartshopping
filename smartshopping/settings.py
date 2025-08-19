@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'django.contrib.humanize',
     'widget_tweaks',
+    'cloudinary',
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -205,3 +208,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CSRF_TRUSTED_ORIGINS = [
     "https://web-smartshopping.up.railway.app"
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'duludvo1v',
+    'API_KEY': '433721367291643',
+    'API_SECRET': '**********'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
