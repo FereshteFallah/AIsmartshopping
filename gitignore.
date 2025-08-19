@@ -8,8 +8,6 @@ env/
 venv/
 *.env
 
-# Django stuff
-*.sqlite3        # پوشه جمع‌آوری شده استاتیک، نیازی به GitHub نیست
 
 
 # IDEs
