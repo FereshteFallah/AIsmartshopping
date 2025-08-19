@@ -1,0 +1,111 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #d7d6db, #662da0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #8b5cf6;
+            margin-bottom: 30px;
+        }
+
+        .login-container form p {
+            margin-bottom: 15px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 5px rgba(139,92,246,0.5);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #8b5cf6;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #4e0fae;
+        }
+
+        .login-container .help-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .login-container .help-text a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+
+        .login-container .help-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>LogIn</h2>
+        <form method="post" class="w-100" style="max-width: 400px; margin:auto; padding:20px; border:1px solid #ddd; border-radius:8px; background-color:#f9f9f9;">
+            {% csrf_token %}
+            
+            <div class="mb-3" style="margin-top: 10px;padding-top: 10px;">
+                {{ form.username.label_tag }}
+                {{ form.username|add_class:"form-control" }}
+            </div>
+            
+            <div class="mb-3" style="margin-top: 10px;padding-top: 10px;">
+                {{ form.password.label_tag }}
+                {{ form.password|add_class:"form-control" }}
+            </div>
+            
+            <button type="submit" class="btn" style="background-color:#8b5cf6; color:white; width:100%; font-weight:bold;">Log in</button>
+        </form>
+        <div class="help-text">
+            Don't have an account?<a href="{% url 'register' %}">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>

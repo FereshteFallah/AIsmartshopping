@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load math_filters %}
+{% load humanize %}
+
+{% block title %} home {% endblock %}
+
+{% block content %}
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .section-title {
+    font-weight: 700;
+    font-size: 1.48px;
+    margin-bottom: 1.15px;
+    color: #4a4a4a;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-align: center;
+
+  }
+  #popularProductsCarousel {
+    padding: 20px 0;
+}
+ 
+
+  .product-card {
+    margin: 10px auto; 
+    padding: 8px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+ 
+  .product-image {
+    height: 350px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+  .product-image-slid {
+    height: 600px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .product-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #212529;
+    margin-bottom: 0.8rem;
+    flex-grow: 1;
+  }
+
+  .product-price {
+    font-weight: 700;
+    color: #8b5cf6;
+    font-size: 1.15rem;
+  }
+
+  .product-rating {
+    margin-top: 6px;
+    color: #f0ad4e;
+  }
+
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(102, 16, 242, 0.8);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    background-color: #6610f2;
+  }
+
+
+  @media (max-width: 576px) {
+    .product-image {
+      height: 140px;
+    }
+    img {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    -webkit-transition: opacity 1.5s ease-out, transform 1.5s ease-out; /* برای Safari */
+    -webkit-transform: translateX(-100px);
+    max-width: 300px;
+    display: block;
+    margin: 30px auto;
+  }
+
+  img.slide-in {
+    opacity: 1;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+  }
+}
+
+
+
+.smooth-image {
+  opacity: 0;
+  filter: blur(5px); 
+  transform: scale(0.97) translateY(15px);
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out, filter 1.8s ease-out;
+}
+
+.smooth-image.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1) translateY(0);
+}
+
+
+</style>
+
+<div  style="width:100%; height:700px; overflow:hidden; text-align:center;background-color: white;">
+  <img class="smooth-image"  src="/media/products/baner.jpeg" alt="Banner" style="width:70%; height:100%; object-fit:cover; padding-top: 20px;">
+</div>
+
+<script>document.addEventListener("DOMContentLoaded", () => {
+  const img = document.querySelector(".smooth-image");
+  img.classList.add("visible");
+});</script>
+
+<div   style="padding-left: 100px;padding-right: 100px;">
+
+  <!-- بخش محصولات عادی -->
+  <h2   style="text-align: center; font-size: 52px; margin-bottom: 20px;color: #4a4a4a; color: #4a4a4a;padding-bottom: 20px;font-weight: 300;"> New Collections</h2>
+  {% if products %}
+  <div class="row g-4 mb-5">
+    {% for product in products|slice:":8" %}
+      <div class="col-6 col-md-3 d-flex">
+        <div class="product-card" onclick="location.href='{% url 'products:product_detail' product.category.slug product.slug %}'">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid" />
+          <div class="product-title">{{ product.name }}</div>
+          <div class="product-price">{{ product.price|floatformat:0 |intcomma}} Toman</div>
+        </div>
+      </div>
+    {% endfor %}
+
+    
+  </div>
+  <a href="{% url 'product_all' %}" style="display:inline-block;margin-top:10px;color:#8b5cf6;font-size: x-large;"> View All</a>
+  {% else %}
+    <p class="text-center text-muted">No products available for display.</p>
+  {% endif %}
+
+ 
+  <h2 style="text-align: center; font-size: 52px; margin-top: 150px;color: #4a4a4a; color: #4a4a4a;padding-bottom: 20px;font-weight: 300;">
+    Best Sellers
+  </h2>
+  <p style="
+      font-size: 22px; 
+      color: #676666; 
+      font-weight: 300;
+      max-width: 700px; 
+      margin: 0 auto 40px; 
+      text-align: center;
+      line-height: 1.4;
+      white-space: pre-line; /* برای چندخطی شدن متن */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  ">
+    Explore Aka Boutique’s top picks—stylish, high-quality pieces<br> loved by our customers for every occasion.
+  </p>
+  {% if popular_products %}
+<div id="popularProductsCarousel" data-bs-interval="3000" class="carousel slide mb-5" data-bs-ride="carousel" style="height: 500px;">
+  <div class="carousel-inner">
+    {% for product in popular_products %}
+      {% if forloop.counter0|divisibleby:4 %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %} {% if forloop.counter0 == 3 %}special-effect{% endif %}">
+          <div class="row gx-4">
+      {% endif %}
+
+      <div class="col-6 col-md-3 d-flex">
+        <div class="product-card" onclick="location.href='{% url 'products:product_detail' product.category.slug product.slug %}'">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid" />
+        </div>
+      </div>
+
+      {% if forloop.counter|divisibleby:4 or forloop.last %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#popularProductsCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#popularProductsCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% else %}
+  <p class="text-center text-muted">No popular products found.</p>
+{% endif %}
+
+</div>
+<div style="background-color: white;">
+
+
+
+
+
+<h2 style="text-align: center; font-size: 52px; margin-top: 150px;color: #4a4a4a; color: #4a4a4a;font-weight: 300;padding-top: 50px;">Why Choose UKA ?</h2>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+ 
+ <section style="display:flex; justify-content:center; gap:140px; padding:50px 0; text-align:center; font-family: Arial, sans-serif;margin-top: 50px;">
+    <div style="max-width:150px;">
+      <i class="fas fa-star" style="font-size:60px; color:#bebbbb; margin-bottom:12px;"></i>
+      <h4 style="color:#444; font-weight:600;">Premium Quality</h4>
+      <p style="color:#666; font-size:14px;">Only the finest fabrics and craftsmanship.</p>
+    </div>
+    <div style="max-width:150px;">
+      <i class="fas fa-shipping-fast" style="font-size:40px; color:#bebbbb; margin-bottom:12px;"></i>
+      <h4 style="color:#444; font-weight:600;">Free Shipping</h4>
+      <p style="color:#666; font-size:14px;">Fast delivery on all orders.</p>
+    </div>
+    <div style="max-width:150px;">
+      <i class="fas fa-undo" style="font-size:40px; color:#bebbbb; margin-bottom:12px;"></i>
+      <h4 style="color:#444; font-weight:600;">Easy Returns</h4>
+      <p style="color:#666; font-size:14px;">30-day hassle-free returns.</p>
+    </div>
+    <div style="max-width:150px;">
+      <i class="fas fa-headset" style="font-size:40px; color:#bebbbb; margin-bottom:12px;"></i>
+      <h4 style="color:#444; font-weight:600;">24/7 Support</h4>
+      <p style="color:#666; font-size:14px;">We’re here to help anytime.</p>
+    </div>
+  </section>
+
+</div>
+<div style="padding-left: 100px;padding-right: 100px;">
+
+
+{% if user.is_authenticated %}
+  <h2 style="text-align: center; font-size: 52px; margin-top: 150px; color: #4a4a4a; padding-bottom: 20px; font-weight: 300;">
+    Picked Just for You
+  </h2>
+  {% if recommended_products %}
+  <div id="recommendedProductsCarousel" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="3000" style="height: 500px; width: 90%; margin: 0 auto;">
+    <div class="carousel-inner">
+      {% for product in recommended_products %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="d-flex justify-content-center">
+            <div class="product-card" onclick="location.href='{% url 'products:product_detail' product.category.slug product.slug %}'">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image-slid img-fluid" style="max-height: 400px;" />
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#recommendedProductsCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">قبلی</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#recommendedProductsCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">بعدی</span>
+    </button>
+
+    <div class="carousel-indicators mt-3">
+      {% for product in recommended_products %}
+        <button type="button" data-bs-target="#recommendedProductsCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}">
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+    <p class="text-center text-muted"> No popular products found.</p>
+  {% endif %}
+{% endif %}
+
+
+</div>
+
+<!-- Bootstrap JS Bundle (Popper + Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

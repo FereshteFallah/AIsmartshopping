@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+
+<header class="us-header">
+  
+ 
+  <nav class="us-nav">
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'product_all' %}">Products</a></li>
+      <li><a href="{% url 'aboutus' %}">About</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+  </nav>
+
+ 
+    <div class="actions-us">
+      {% if user.is_authenticated %}
+        <div class="welcome-msg" style="color: #8b5cf6;">
+          Welcome Dear {{ user.first_name|default:user.username }}!
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      {% else %}
+        <button onclick="window.location.href='{% url 'login' %}'">Login</button>
+      {% endif %}
+  
+      <div class="cart-wrapper">
+        <a href="{% if user.is_authenticated %}{% url 'cart_detail' %}{% else %}{% url 'login' %}{% endif %}" class="cart-icon" style="cursor:pointer;">
+          🛒
+          <span class="cart-badge">
+            {% if user.is_authenticated %}
+            {{ cart_item_count }}
+            {% else %}
+              0
+            {% endif %}
+          </span>
+        </a>
+      </div>
+    </div>
+
+
+ 
+</header>

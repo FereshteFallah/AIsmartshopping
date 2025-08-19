@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - uka Boutique{% endblock %}
+{% block content %}
+<!-- فونت‌آوسام برای آیکون‌ها -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
+<div class="container">
+    <h1>About Uka Boutique</h1>
+    <div class="section">
+        <p>
+            Uka Boutique is where art, creativity, and quality blend seamlessly to create an unparalleled experience in the world of women's fashion.
+            At Uka, we believe every woman deserves the best, and every garment should not only be beautiful but also reflect your personality and lifestyle.
+        </p>
+        <p>
+            With a team of experts and prominent designers, Uka Boutique exclusively crafts elegant evening dresses, blouses, and women's wear with meticulous attention to detail.
+            Each piece is the result of hours of research, selecting the finest fabrics, and expert tailoring, reflecting our commitment to quality and customer satisfaction.
+        </p>
+        <p>
+            Our goal goes beyond selling clothes; we strive to create a unique and delightful experience for our customers where you don’t just buy a dress — you become part of the Uka family.
+            Uka Boutique constantly follows the latest fashion trends and creatively designs garments that make you shine at every event and moment of your life.
+        </p>
+        <p>
+            From the moment you step into the world of Uka Boutique, experience comfort, confidence, and uniqueness.
+            We stand by you so that every time you wear Uka, you present the best version of yourself.
+        </p>
+    </div>
+
+    
+    <div class="contact-info" >
+        <div><i class="fas fa-phone-alt"></i><a href="tel:+1234567890" style="color: #8b5cf6;">+989198209321</a></div>
+        <div><i class="fas fa-envelope"></i><a href="mailto:info@ukaboutique.com" style="color: #8b5cf6;">info@ukaboutique.com</a></div>
+        <div><i class="fab fa-instagram"></i><a href="https://www.instagram.com/uka_meson/"  style="color: #8b5cf6;"target="_blank">@uka_meson</a></div>
+    </div>
+
+    <div class="map-container">
+        <div style="width:100%;height:400px;margin-top:20px;">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.1234567890123!2d35.930359!3d31.953190!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b56e2f1b1a1a1%3A0x1234567890abcdef!2sAmman%2C%20Jordan!5e0!3m2!1sen!2s!4v1692199999999!5m2!1sen!2s"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

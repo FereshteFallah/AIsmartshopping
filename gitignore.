@@ -1,0 +1,23 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+*.env
+
+# Django stuff
+*.sqlite3        # پوشه جمع‌آوری شده استاتیک، نیازی به GitHub نیست
+
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

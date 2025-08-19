@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<footer class="us-footer">
+  <div class="footer-section">
+    <h4>About Our Store</h4>
+    <p>
+      Ukā Boutique offers elegant, high-quality women's fashion with a focus on modern and timeless designs. We prioritize exceptional craftsmanship and customer satisfaction.</p>
+  </div>
+  <div class="footer-section">
+    <h4>Quick Links</h4>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'product_all' %}">Products</a></li>
+      <li><a href="{% url 'aboutus' %}">About Us</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="footer-section social-icons ">
+    <h4>Contact Us</h4>
+    
+    <ul >
+      <li><a href="mailto:en.f.fallah@gmail.com" aria-label="Email" ><i class="bi bi-envelope-fill"></i>en.f.fallah@gmail.com</a></li>
+    <li><a href="tel:+989198209321" aria-label="Phone" style="font-weight: 100;"><i class="bi bi-telephone-fill"></i>+989198209321</a></li>
+    </ul>
+
+  </div>
+  <div class="footer-section">
+    <h4>Follow Us</h4>
+    <div class="social-icons">
+      <a href="https://wa.me/989198209321" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+      <a href="https://t.me/Uka_Meson" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+      <a href="https://www.instagram.com/Uka_Meson" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+    </div>
+  </div>
+  <div class="copyright">
+    &copy; 2025 My Store. All rights reserved.
+  </div>
+</footer>

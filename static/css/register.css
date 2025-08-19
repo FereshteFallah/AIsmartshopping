@@ -1,0 +1,106 @@
+    /* پس‌زمینه گرادیانت کل صفحه */
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #d7d6db, #662da0);
+    }
+
+    /* کارت فرم */
+    .form-container {
+        background: #ffffffee;
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    /* عنوان فرم */
+    .form-container h2 {
+        margin-bottom: 30px;
+        color: #8b5cf6;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    /* فیلدهای ورودی */
+    .form-container input {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-container input:focus {
+        outline: none;
+        border-color: #6a11cb;
+        box-shadow: 0 0 10px rgba(106,17,203,0.3);
+    }
+
+    /* دکمه */
+    .form-container button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: #6a11cb;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .form-container button:hover {
+        background: #4e0fae;
+    }
+
+    /* خطاها */
+    .form-container ul {
+        color: #948785;
+        text-align: left;
+        padding-left: 20px;
+        margin-bottom: 15px;
+        font-size:smaller;
+    }
+    .form-container span {
+        color: #948785;
+        text-align: left;
+        margin-bottom: 15px;
+        font-size:smaller;
+    }
+    /* متن کمکی */
+    .form-container .help-text {
+        font-size: 0.9rem;
+        color: #555;
+        margin-top: 15px;
+    }
+
+    .form-container .help-text a {
+        color: #6a11cb;
+        text-decoration: none;
+        margin-left: 5px;
+        font-weight: 500;
+    }
+
+    .form-container .help-text a:hover {
+        text-decoration: underline;
+    }
+
+    /* متن کمکی داخل فرم */
+    .form-container small {
+        color: #888;
+        font-size: 0.85rem;
+        display: block;
+        text-align: left;
+        margin-top: -15px;
+        margin-bottom: 15px;
+    }

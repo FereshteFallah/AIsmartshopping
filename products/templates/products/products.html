@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load math_filters %}
+{% load humanize %}
+    {% block title %}products{% endblock %}
+    {% block content %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/product.css' %}" />
+</head>
+<body>
+
+  <h1>New Collections</h1>
+  <div class="products">
+  
+    {% for product in products %}
+    <div class="products-card" onclick="window.location.href='{% url 'products:product_detail' product.category.slug product.slug %}'">
+      <img src="{{ product.image.url }}" alt="Plant 1" class="products-image">
+      <div class="products-info">
+        <div class="products-price" style="color: #8b5cf6;">{{ product.price|floatformat:0 |intcomma}} T</div>
+        <div class="products-title">{{ product.name }}</div>
+      </div>
+    </div>
+    {% endfor %}
+   
+  </div>
+
+  {% endblock %}

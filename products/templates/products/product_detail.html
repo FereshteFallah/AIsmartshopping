@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ product.name }} — details{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent px-0" >
+      <li class="breadcrumb-item"><a href="/" style="color: #8b5cf6;">Home</a></li>
+      <li class="breadcrumb-item"><a href="#"style="color: #8b5cf6;">{{ product.category.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row g-4">
+    <aside class="col-lg-5">
+      <div class="card shadow-sm">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top p-3 product-detail-image" style="object-fit: contain; max-height: 400px;">
+        {% else %}
+          <img src="{% static 'images/no-image.png' %}" alt="بدون عکس" class="card-img-top p-3 product-detail-image" style="object-fit: contain; max-height: 400px;">
+        {% endif %}
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0 " style="color: #8b5cf6;">{{ product.price|floatformat:0 |intcomma}} Toman</h3>
+            <a href="{% url 'add_to_cart' product.id%}" class="btn btn-primary btn-sm px-4 d-flex align-items-center gap-2 shadow-sm"
+            style="border-radius: 30px; transition: background-color 0.3s, transform 0.2s;background-color: #8b5cf6;">
+            <i class="bi bi-cart-plus-fill fs-5"></i> Add to Card
+         </a>
+          </div>
+
+          <ul class="list-unstyled small text-muted">
+            <li><strong>Category:</strong> {{ product.category.name }}</li>
+            <li><strong>Material:</strong> {{ product.material }}</li>
+            <li>
+              <strong>Score: {{ sentiment_score }}</strong>
+              <span class="text-muted">({{ reviews.count }} comment)</span>
+              <p>
+                {% for i in "12345"|make_list %}
+                  {% if forloop.counter <= stars %}
+                    <span style="color: gold; font-size: 24px;">&#9733;</span>  <!-- ستاره پر -->
+                  {% else %}
+                    <span style="color: lightgray; font-size: 24px;">&#9734;</span>  <!-- ستاره خالی -->
+                  {% endif %}
+                {% endfor %}
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- توضیحات و نظرات -->
+    <section class="col-lg-7">
+      <div class="card shadow-sm p-4">
+        <h2 class="mb-4">{{ product.name }}</h2>
+
+        <h5>Description</h5>
+        <p class="text-muted mb-4">{{ product.description|linebreaksbr }}</p>
+
+        <hr>
+
+        <h5 class="mb-3">Comments</h5>
+        {% if user.is_authenticated %}
+          <form method="post" class="mb-4">
+            {% csrf_token %}
+           
+            <div class="mb-3">
+              <textarea name="text" class="form-control" rows="3" placeholder=" Write your comment..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm" style="background-color: #8b5cf6;"> Submit Comment</button>
+          </form>
+        {% else %}
+          <p class="text-muted">  to submit your comment <a href="{% url 'login' %}">log in  </a>.</p>
+        {% endif %}
+
+      <!-- لیست نظرات 
+<div class="reviews-list">
+    {% if reviews %}
+      {% for review in reviews %}
+        <div class="review-card mb-4 p-4 rounded shadow-sm bg-white border">
+          <div class="d-flex align-items-center mb-3">
+            <div class="avatar bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3" style="width:48px; height:48px; font-weight:bold; font-size:1.25rem;">
+              {{ review.user.get_full_name|default:review.user.username|slice:":1"|upper }}
+            </div>
+            <div>
+              <strong class="review-user">{{ review.user.get_full_name|default:review.user.username }}</strong><br>
+              <small class="text-muted">{{ review.created_at|date:"Y/m/d H:i" }}</small>
+            </div>
+          </div>
+          <p class="review-text text-secondary" style="font-size:1rem; line-height:1.5;">{{ review.content|linebreaksbr }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-center text-muted">هنوز نظری برای این محصول ثبت نشده است.</p>
+    {% endif %}
+  </div>
+-->
+  
+<!-- لیست نظرات -->
+<div class="reviews-list">
+  {% if reviews %}
+    {% for review in reviews %}
+      <div class="review-card mb-4 p-4 rounded shadow-sm bg-white border">
+        <div class="d-flex align-items-center mb-3">
+          <div class="avatar rounded-circle d-flex justify-content-center align-items-center me-3" 
+          style="width:48px; height:48px; font-weight:bold; font-size:1.25rem; background-color:#8b5cf6; color:white;">         
+             {{ review.user.get_full_name|default:review.user.username|slice:":1"|upper }}
+          </div>
+          <div>
+            <strong class="review-user">{{ review.user.get_full_name|default:review.user.username }}</strong><br>
+            <small class="text-muted">{{ review.created_at|date:"Y/m/d H:i" }}</small>
+          </div>
+        </div>
+        <p class="review-text text-secondary" style="font-size:1rem; line-height:1.5;">{{ review.content|linebreaksbr }}</p>
+        
+        <!-- نمایش احساسات -->
+        <p>Sentiment : 
+          {% if review.sentiment == 'positive' %}
+            <span style="color:green;">positive</span>
+          {% elif review.sentiment == 'negative' %}
+            <span style="color:red;">negative</span>
+          {% else %}
+            <span style="color:gray;">Neutral</span>
+          {% endif %}
+        </p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-center text-muted">There are no comments for this product yet</p>
+  {% endif %}
+</div>
+
+
+
+        <!-- محصولات مرتبط -->
+        {% if related_products %}
+          <div class="mt-5">
+            <h5>محصولات مرتبط</h5>
+            <div class="d-flex gap-3 overflow-auto py-2 related-products">
+              {% for rp in related_products %}
+                <a href="{% url 'product_detail' category_slug=rp.category.slug product_slug=rp.slug %}" class="card text-decoration-none" style="min-width:160px;">
+                  {% if rp.image %}
+                    <img src="{{ rp.image.url }}" alt="{{ rp.name }}" class="card-img-top p-2" style="height:110px; object-fit:contain;">
+                  {% endif %}
+                  <div class="card-body p-2">
+                    <h6 class="card-title mb-1 text-dark">{{ rp.name }}</h6>
+                    <p class="mb-0 text-primary fw-bold" style="color: #8b5cf6;">{{ rp.price|floatformat:0 }} Toman تومان</p>
+                  </div>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

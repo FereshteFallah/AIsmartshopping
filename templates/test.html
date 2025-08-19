@@ -1,0 +1,387 @@
+{% load static %}
+<head>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+
+
+<header class="custom-header">
+  <div class="logo" onclick="location.href='/'">فروشگاه من</div>
+  <nav>
+    <ul>
+      <li><a href="/">خانه</a></li>
+      <li><a href="/products">محصولات</a></li>
+      <li><a href="/about">درباره ما</a></li>
+      <li><a href="/contact">تماس با ما</a></li>
+    </ul>
+  </nav>
+  <div class="actions">
+    <a href="/cart"><i class="bi bi-cart3"></i> سبد خرید</a>
+    <div class="user-info">
+      {% if user.is_authenticated %}
+        <span class="text-primary fw-bold">سلام، {{ user.get_full_name|default:user.username }} عزیز!</span>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-secondary ms-3">خروج</button>
+        </form>
+        
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">ورود</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-primary ms-2">ثبت نام</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+  
+    /* Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+  
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #faf5e4;
+    }
+  
+    header.arabic-header {
+      background: linear-gradient(90deg, #8b0000, #ffcc00); /* قرمز تیره به طلایی */
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(255, 204, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+  
+    header.arabic-header .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      cursor: pointer;
+      text-shadow: 0 0 8px #ffcc00;
+      user-select: none;
+    }
+  
+    nav.arabic-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+  
+    nav.arabic-nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 30px;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+  
+    nav.arabic-nav ul li a:hover {
+      background-color: #ffcc00;
+      color: #8b0000;
+      box-shadow: 0 0 8px #ffcc00;
+    }
+  
+    .actions-arabic {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  
+    .actions-arabic a, .actions-arabic button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      box-shadow: 0 0 6px rgba(255,255,255,0.6);
+    }
+  
+    .actions-arabic a:hover, .actions-arabic button:hover {
+      background-color: #ffcc00;
+      color: #8b0000;
+      box-shadow: 0 0 12px #ffcc00;
+    }
+  
+    /* آیکون های کوچک کنار دکمه ها */
+    .actions-arabic i {
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+  
+    /* ریسپانسیو */
+    @media (max-width: 768px) {
+      header.arabic-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      nav.arabic-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+      .actions-arabic {
+        justify-content: center;
+      }
+    }
+  </style>
+  
+  <header class="arabic-header">
+    <div class="logo" onclick="location.href='/'">المتجر الملكي</div>
+    <nav class="arabic-nav">
+      <ul>
+        <li><a href="/">الرئيسية</a></li>
+        <li><a href="/products">المنتجات</a></li>
+        <li><a href="/about">من نحن</a></li>
+        <li><a href="/contact">اتصل بنا</a></li>
+      </ul>
+    </nav>
+    <div class="actions-arabic">
+      <a href="/cart"><i class="bi bi-cart3"></i> عربة التسوق</a>
+      <button>تسجيل الدخول</button>
+    </div>
+  </header>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <style>
+    footer.custom-footer {
+      background: #222;
+      color: #eee;
+      padding: 3rem 2rem 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    footer.custom-footer .container {
+      max-width: 1140px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    footer.custom-footer .about,
+    footer.custom-footer .quick-links,
+    footer.custom-footer .contact {
+      flex: 1 1 250px;
+    }
+    footer.custom-footer h5 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #4b6cb7;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+    }
+    footer.custom-footer p,
+    footer.custom-footer ul,
+    footer.custom-footer a {
+      color: #ccc;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+    footer.custom-footer ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    footer.custom-footer ul li {
+      margin-bottom: 0.7rem;
+    }
+    footer.custom-footer ul li a {
+      text-decoration: none;
+      color: #ccc;
+      transition: color 0.3s ease;
+    }
+    footer.custom-footer ul li a:hover {
+      color: #4b6cb7;
+    }
+    footer.custom-footer .social-icons a {
+      color: #ccc;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      transition: color 0.3s ease;
+    }
+    footer.custom-footer .social-icons a:hover {
+      color: #4b6cb7;
+    }
+    footer.custom-footer hr {
+      margin: 2rem 0 1rem;
+      border: none;
+      height: 1px;
+      background: #444;
+    }
+    footer.custom-footer .copyright {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+      font-weight: 300;
+    }
+  
+    /* ریسپانسیو */
+    @media (max-width: 768px) {
+      footer.custom-footer .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      footer.custom-footer .about,
+      footer.custom-footer .quick-links,
+      footer.custom-footer .contact {
+        flex: unset;
+        width: 100%;
+        text-align: center;
+      }
+      footer.custom-footer .social-icons {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+  
+  <footer class="custom-footer">
+    <div class="container">
+      <div class="about">
+        <h5>درباره ما</h5>
+        <p>ما فروشگاهی هستیم که بهترین محصولات را با بهترین کیفیت و قیمت ارائه می‌کنیم. رضایت شما هدف ماست.</p>
+      </div>
+      <div class="quick-links">
+        <h5>لینک‌های سریع</h5>
+        <ul>
+          <li><a href="/">خانه</a></li>
+          <li><a href="/products">محصولات</a></li>
+          <li><a href="/about">درباره ما</a></li>
+          <li><a href="/contact">تماس با ما</a></li>
+        </ul>
+      </div>
+      <div class="contact">
+        <h5>تماس با ما</h5>
+        <p>ایمیل: info@example.com</p>
+        <p>تلفن: ۰۱۲۳۴۵۶۷۸۹</p>
+        <p>آدرس: تهران، خیابان مثال، پلاک ۱۲۳</p>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p class="copyright">&copy; ۲۰۲۵ فروشگاه من. همه حقوق محفوظ است.</p>
+  </footer>
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  {% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">🛒 Your cart</h2>
+
+    {% if order %}
+    <div class="table-responsive shadow-lg rounded-4">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Products</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Unit Price</th>
+                    <th class="text-center">Total Price</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                    <td class="fw-semibold">{{ item.product.name }}</td>
+                    <td class="text-center">{{ item.quantity }}</td>
+                    <td class="text-center text-secondary">{{ item.price|intcomma }} Toman</td>
+                    <td class="text-center fw-bold text-success">{{ item.total_price|intcomma }} Toman</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot class="bg-light">
+                <tr>
+                    <td colspan="3" class="text-end fw-bold"> Total Amount:</td>
+                    <td class="text-center fw-bold fs-5 text-primary">
+                        {{ order.total_price|intcomma }} Toman
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a  class="btn btn-lg btn-success px-5 shadow">
+            Continue Shopping<i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center rounded-4 shadow-sm">
+        Your shopping cart is empty.😢
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
