@@ -210,8 +210,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'duludvo1v',
-    'API_KEY': '433721367291643',
-    'API_SECRET': '**********'
+    'API_KEY': '863974654396797',
+    'API_SECRET': 'AhZWBezCD9rw6FwkD6li0l7gBGk'
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
